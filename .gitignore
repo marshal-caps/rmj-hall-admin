@@ -1,0 +1,12 @@
+# Frontend
+hall-admin-frontend/node_modules
+hall-admin-frontend/build
+
+# Backend
+RMJHallAdmin-backend/target
+
+# IDE & OS
+.idea
+.vscode
+.DS_Store
+*.log
