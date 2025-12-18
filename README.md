@@ -49,5 +49,3 @@ This application helps hall administrators manage customer enquiries, confirm bo
 
 ---
 
-## 📂 Project Structure
-
