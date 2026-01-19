@@ -1,11 +1,11 @@
-# RMJ Hall Admin
+RMJ Hall Admin
 
 RMJ Hall Admin is a full-stack banquet hall booking and enquiry management system built using **Spring Boot** for the backend and **React** for the frontend.  
 This application helps hall administrators manage customer enquiries, confirm bookings, avoid date/time conflicts, and track events efficiently.
 
 ---
 
-## 🚀 Features
+Features
 
 ### Backend (Spring Boot)
 - Create customer enquiries
@@ -28,19 +28,19 @@ This application helps hall administrators manage customer enquiries, confirm bo
 
 ---
 
-## 🛠️ Tech Stack
+Tech Stack
 
 **Backend**
 - Java
 - Spring Boot
 - Spring Data JPA
-- PostgreSQL / MySQL (configurable)
+- MySQL
 - Maven
 
 **Frontend**
 - React
 - React Router
-- Axios / Fetch API
+- Fetch API
 - HTML, CSS
 
 **Tools**
