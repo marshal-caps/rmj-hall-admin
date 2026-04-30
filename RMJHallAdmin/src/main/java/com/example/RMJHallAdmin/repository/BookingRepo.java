@@ -18,6 +18,9 @@ public interface BookingRepo extends JpaRepository<BookingModel,Long> {
    long countByStatus(BookingStatus status);
    long countByDeletedTrue();
    long countByEventDate(LocalDate localDate);
+   List<BookingModel> findByEventDateAfterAndDeletedFalseOrderByEventDateAsc(LocalDate date);
+
+   List<BookingModel> findTop5ByDeletedFalseOrderByCreatedAtDesc();
 
 
 

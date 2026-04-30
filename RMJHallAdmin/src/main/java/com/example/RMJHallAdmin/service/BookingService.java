@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import com.example.RMJHallAdmin.dto.UpcomingBookingDTO;
+import com.example.RMJHallAdmin.dto.RecentEnquiryDTO;
 
 @Service
 public class BookingService {
@@ -69,6 +71,35 @@ public class BookingService {
         listbookingModel.sort((a, b) -> a.getStartTime().compareTo(b.getStartTime()));
         return listbookingModel;
 
+    }
+    public List<UpcomingBookingDTO> getUpcomingBookings() {
+        List<BookingModel> bookings =
+                bookingRepo.findByEventDateAfterAndDeletedFalseOrderByEventDateAsc(LocalDate.now());
+
+        return bookings.stream()
+                .map(b -> new UpcomingBookingDTO(
+                        b.getCustomerName(),
+                        b.getEventDate(),
+                        b.getStartTime(),
+                        b.getEndTime(),
+                        b.getStatus()
+                ))
+                .toList();
+    }
+
+    public List<RecentEnquiryDTO> getRecentEnquiries() {
+        List<BookingModel> enquiries =
+                bookingRepo.findTop5ByDeletedFalseOrderByCreatedAtDesc();
+
+        return enquiries.stream()
+                .map(b -> new RecentEnquiryDTO(
+                        b.getCustomerName(),
+                        b.getPhoneNumber(),
+                        b.getEventDate(),
+                        b.getCreatedAt(),
+                        b.getStatus()
+                ))
+                .toList();
     }
 
     public void confirm(int bookingId) {
