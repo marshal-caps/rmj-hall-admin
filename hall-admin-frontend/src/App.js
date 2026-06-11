@@ -16,18 +16,18 @@ function App() {
         <h1 className="title">RMJ Hall Admin Panel</h1>
 
         <nav className="navbar">
-          <Link to="/">Home</Link>
-          <Link to="/create">Create Enquiry</Link>
           <Link to="/dashboard">Dashboard</Link>
-          <Link to="/menus">Menus</Link>
-          <Link to="/bookings">Bookings</Link>
+          <Link to="/create">Create Enquiry</Link>
+          <Link to="/">Search Bookings</Link>
+          {/* <Link to="/menus">Menus</Link> */}
+          <Link to="/bookings">Confirmed Bookings</Link>
         </nav>
 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<CreateEnquiry />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/menus" element={<Menus />} />
+          {/* <Route path="/menus" element={<Menus />} /> */}
           <Route path="/bookings" element={<BookingsList />} />
         </Routes>
       </div>
