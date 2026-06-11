@@ -1,6 +1,9 @@
 package com.example.RMJHallAdmin.service;
 
+import com.example.RMJHallAdmin.dto.DashBoardSummary;
 import com.example.RMJHallAdmin.dto.EnquiryRequest;
+import com.example.RMJHallAdmin.exception.BookingNotFoundException;
+import com.example.RMJHallAdmin.exception.TimeSlotUnavailableException;
 import com.example.RMJHallAdmin.model.BookingModel;
 import com.example.RMJHallAdmin.model.BookingStatus;
 import com.example.RMJHallAdmin.repository.BookingRepo;
@@ -13,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import com.example.RMJHallAdmin.dto.UpcomingBookingDTO;
+import com.example.RMJHallAdmin.dto.RecentEnquiryDTO;
 
 @Service
 public class BookingService {
@@ -37,7 +42,7 @@ public class BookingService {
                 continue;
             }
             if (enquiry.getStartTime().isBefore(b.getEndTime()) && enquiry.getEndTime().isAfter(b.getStartTime())) {
-                throw new IllegalArgumentException("Time Overlapping");
+                throw new TimeSlotUnavailableException();
             }
         }
         BookingModel bm = new BookingModel();
@@ -67,11 +72,40 @@ public class BookingService {
         return listbookingModel;
 
     }
+    public List<UpcomingBookingDTO> getUpcomingBookings() {
+        List<BookingModel> bookings =
+                bookingRepo.findByEventDateAfterAndDeletedFalseOrderByEventDateAsc(LocalDate.now());
+
+        return bookings.stream()
+                .map(b -> new UpcomingBookingDTO(
+                        b.getCustomerName(),
+                        b.getEventDate(),
+                        b.getStartTime(),
+                        b.getEndTime(),
+                        b.getStatus()
+                ))
+                .toList();
+    }
+
+    public List<RecentEnquiryDTO> getRecentEnquiries() {
+        List<BookingModel> enquiries =
+                bookingRepo.findTop5ByDeletedFalseOrderByCreatedAtDesc();
+
+        return enquiries.stream()
+                .map(b -> new RecentEnquiryDTO(
+                        b.getCustomerName(),
+                        b.getPhoneNumber(),
+                        b.getEventDate(),
+                        b.getCreatedAt(),
+                        b.getStatus()
+                ))
+                .toList();
+    }
 
     public void confirm(int bookingId) {
         Optional<BookingModel> confirmId = bookingRepo.findById((long) bookingId);
         if (confirmId.isEmpty()) {
-            throw new IllegalArgumentException("Invalid Booking ID");
+            throw new BookingNotFoundException();
         }
         BookingModel confirmbooking = confirmId.get();
         if (confirmbooking.isDeleted() == true || confirmbooking.getStatus() == BookingStatus.CANCELLED) {
@@ -90,7 +124,7 @@ public class BookingService {
             }
 
             if (confirmbooking.getStartTime().isBefore(b.getEndTime()) && confirmbooking.getEndTime().isAfter(b.getStartTime())) {
-                throw new IllegalArgumentException("Time Overlapping");
+                throw new TimeSlotUnavailableException();
             }
         }
         confirmbooking.setStatus(BookingStatus.CONFIRMED);
@@ -103,7 +137,7 @@ public class BookingService {
     public void updateEnquiry(long id, LocalDate eventDate, LocalTime startTime, LocalTime endTime, String notes) {
         Optional<BookingModel> exists = bookingRepo.findById((long) id);
         if (exists.isEmpty()) {
-            throw new IllegalArgumentException("Invalid Booking ID");
+            throw new BookingNotFoundException();
         }
         BookingModel updatebooking = exists.get();
         if (updatebooking.isDeleted() || updatebooking.getStatus().equals(BookingStatus.CANCELLED) || updatebooking.getStatus().equals(BookingStatus.CONFIRMED)) {
@@ -140,7 +174,7 @@ public class BookingService {
     public void softDelete(long id) {
         Optional<BookingModel> exists = bookingRepo.findById((long)id);
         if(exists.isEmpty()){
-            throw new IllegalArgumentException("Invalid ID");
+            throw new BookingNotFoundException();
         }
         BookingModel deletemodel = exists.get();
         if(deletemodel.isDeleted()){
@@ -149,6 +183,15 @@ public class BookingService {
         deletemodel.setDeleted(true);
         deletemodel.setUpdatedAt(LocalDateTime.now());
         bookingRepo.save(deletemodel);
+    }
+    public DashBoardSummary getsummary(){
+        DashBoardSummary dashBoardSummary = new DashBoardSummary();
+        dashBoardSummary.setConfirmedBookings(bookingRepo.countByStatus(BookingStatus.CONFIRMED));
+        dashBoardSummary.setEnquiredBookings(bookingRepo.countByStatus(BookingStatus.ENQUIRED));
+        dashBoardSummary.setCancelledBookings(bookingRepo.countByDeletedTrue());
+        dashBoardSummary.setTotalBookings(bookingRepo.count());
+        dashBoardSummary.setTodayBookings(bookingRepo.countByEventDate(LocalDate.now()));
+        return dashBoardSummary;
     }
 }
 

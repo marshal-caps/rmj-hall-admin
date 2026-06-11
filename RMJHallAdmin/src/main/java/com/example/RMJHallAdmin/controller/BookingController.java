@@ -1,11 +1,14 @@
-package com.example.RMJHallAdmin.Controller;
+package com.example.RMJHallAdmin.controller;
 
+import com.example.RMJHallAdmin.dto.DashBoardSummary;
 import com.example.RMJHallAdmin.dto.EnquiryRequest;
 import com.example.RMJHallAdmin.dto.UpdateEnquiryRequest;
 import com.example.RMJHallAdmin.model.BookingModel;
 import com.example.RMJHallAdmin.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.example.RMJHallAdmin.dto.UpcomingBookingDTO;
+import com.example.RMJHallAdmin.dto.RecentEnquiryDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -53,6 +56,20 @@ public class BookingController {
     public String delete(@PathVariable long id) {
         bookingService.softDelete(id);
         return "Deleted Successfully";
+    }
+    @GetMapping("/dashboard/summary")
+    public DashBoardSummary dashboard(){
+        return bookingService.getsummary();
+    }
+
+    @GetMapping("/dashboard/upcoming")
+    public List<UpcomingBookingDTO> getUpcomingBookings() {
+        return bookingService.getUpcomingBookings();
+    }
+
+    @GetMapping("/dashboard/recent-enquiries")
+    public List<RecentEnquiryDTO> getRecentEnquiries() {
+        return bookingService.getRecentEnquiries();
     }
 
 
