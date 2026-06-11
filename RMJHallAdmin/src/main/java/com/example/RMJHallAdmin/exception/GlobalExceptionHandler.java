@@ -37,14 +37,37 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneralException(Exception ex) {
 
+        ex.printStackTrace();
+
         ErrorResponse error = new ErrorResponse(
-                "Something went wrong",
+                ex.getMessage(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 LocalDateTime.now()
         );
 
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(InvalidPhoneNumberException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPhoneNumberException(InvalidPhoneNumberException ex){
+        ErrorResponse error = new ErrorResponse(
+                "Kindly Enter the valid mobile number",
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                LocalDateTime.now());
+
+        return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalargumentexception(IllegalArgumentException ex){
+        ErrorResponse error = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 
 
 }
