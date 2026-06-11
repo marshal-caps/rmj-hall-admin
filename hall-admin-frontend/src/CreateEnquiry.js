@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function CreateEnquiry() {
-  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     customerName: "",
@@ -16,42 +14,131 @@ function CreateEnquiry() {
   });
 
   const updateField = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   };
 
   const submitEnquiry = async () => {
-    const response = await fetch("http://localhost:8080/enquiry", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
 
-    alert(await response.text());
-    navigate("/");
+    try {
+
+      const response = await fetch("http://localhost:8080/enquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+
+        alert(data.message);
+
+        setForm({
+          customerName: "",
+          phoneNumber: "",
+          address: "",
+          eventDate: "",
+          startTime: "",
+          endTime: "",
+          noOfGuests: "",
+          notes: ""
+        });
+
+      } else {
+
+        alert(data.message);
+
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      alert("Unable to connect to server");
+
+    }
   };
 
   return (
     <div className="form-card">
+
       <h2>Create Enquiry</h2>
 
-      <input name="customerName" placeholder="Customer Name" value={form.customerName} onChange={updateField} />
-      <input name="phoneNumber" placeholder="Phone Number" value={form.phoneNumber} onChange={updateField} />
-      <input name="address" placeholder="Address" value={form.address} onChange={updateField} />
+      <input
+        name="customerName"
+        placeholder="Customer Name"
+        value={form.customerName}
+        onChange={updateField}
+      />
+
+      <input
+        name="phoneNumber"
+        placeholder="Phone Number"
+        value={form.phoneNumber}
+        onChange={updateField}
+      />
+
+      <input
+        name="address"
+        placeholder="Address"
+        value={form.address}
+        onChange={updateField}
+      />
 
       <label>Event Date:</label>
-      <input type="date" name="eventDate" value={form.eventDate} onChange={updateField} />
+
+      <input
+        type="date"
+        name="eventDate"
+        value={form.eventDate}
+        onChange={updateField}
+      />
 
       <label>Start Time:</label>
-      <input type="time" name="startTime" value={form.startTime} onChange={updateField} />
+
+      <input
+        type="time"
+        name="startTime"
+        value={form.startTime}
+        onChange={updateField}
+      />
 
       <label>End Time:</label>
-      <input type="time" name="endTime" value={form.endTime} onChange={updateField} />
 
-      <input name="noOfGuests" placeholder="Guests Count" value={form.noOfGuests} onChange={updateField} />
+      <input
+        type="time"
+        name="endTime"
+        value={form.endTime}
+        onChange={updateField}
+      />
 
-      <textarea name="notes" placeholder="Notes" value={form.notes} onChange={updateField}></textarea>
+      <input
+        type="number"
+        name="noOfGuests"
+        placeholder="Guests Count"
+        value={form.noOfGuests}
+        onChange={updateField}
+      />
 
-      <button onClick={submitEnquiry}>Submit Enquiry</button>
+      <textarea
+        name="notes"
+        placeholder="Notes"
+        value={form.notes}
+        onChange={updateField}
+      />
+
+      <button
+        type="button"
+        onClick={submitEnquiry}
+      >
+        Submit Enquiry
+      </button>
+
     </div>
   );
 }
