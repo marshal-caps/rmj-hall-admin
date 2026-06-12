@@ -44,16 +44,17 @@ function Dashboard() {
 
       {/* Upcoming Bookings */}
       <h3>Upcoming Bookings</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Date</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Status</th>
+            </tr>
+          </thead>
         <tbody>
           {upcomingBookings.map((booking, index) => (
             <tr key={index}>
@@ -66,19 +67,21 @@ function Dashboard() {
           ))}
         </tbody>
       </table>
+      </div>
 
       {/* Recent Enquiries */}
       <h3>Recent Enquiries</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Phone</th>
-            <th>Date</th>
-            <th>Created At</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Date</th>
+              <th>Created At</th>
+              <th>Status</th>
+            </tr>
+          </thead>
         <tbody>
           {recentEnquiries.map((enquiry, index) => (
             <tr key={index}>
@@ -91,6 +94,7 @@ function Dashboard() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

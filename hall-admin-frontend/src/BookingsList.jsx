@@ -14,19 +14,20 @@ function BookingsList() {
     <div>
       <h2>All Bookings</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Customer</th>
-            <th>Phone</th>
-            <th>Event Date</th>
-            <th>Start</th>
-            <th>End</th>
-            <th>Guests</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Event Date</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Guests</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
 
         <tbody>
           {bookings.map(b => (
@@ -43,6 +44,7 @@ function BookingsList() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

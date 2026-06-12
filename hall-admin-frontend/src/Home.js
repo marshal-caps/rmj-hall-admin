@@ -72,64 +72,63 @@ function Home() {
       {bookings.length === 0 ? (
         <p>No bookings found</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Date</th>
-              <th>Time</th>
-              <th>Status</th>
-              <th>Guests</th>
-              <th>Notes</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {bookings.map((b) => (
-              <tr key={b.bookingId}>
-                <td>{b.customerName}</td>
-                <td>{b.phoneNumber}</td>
-                <td>{b.eventDate}</td>
-                <td>
-                  {b.startTime} – {b.endTime}
-                </td>
-                <td>
-                  <span
-                    style={{
-                      padding: "5px 10px",
-                      borderRadius: "6px",
-                      background:
-                        b.status === "CONFIRMED" ? "#28a745" : "#ffc107",
-                      color: "white",
-                      fontWeight: "600"
-                    }}
-                  >
-                    {b.status}
-                  </span>
-                </td>
-                <td>{b.noOfGuests}</td>
-                <td>{b.notes}</td>
-
-                <td>
-                  {b.status === "ENQUIRED" && (
-                    <button onClick={() => confirmBooking(b.bookingId)}>
-                      Confirm
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => deleteBooking(b.bookingId)}
-                    style={{ background: "red", marginLeft: "10px" }}
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Guests</th>
+                <th>Notes</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {bookings.map((b) => (
+                <tr key={b.bookingId}>
+                  <td>{b.customerName}</td>
+                  <td>{b.phoneNumber}</td>
+                  <td>{b.eventDate}</td>
+                  <td>
+                    {b.startTime} – {b.endTime}
+                  </td>
+                  <td>
+                    <span
+                      style={{
+                        padding: "5px 10px",
+                        borderRadius: "6px",
+                        background:
+                          b.status === "CONFIRMED" ? "#28a745" : "#ffc107",
+                        color: "white",
+                        fontWeight: "600"
+                      }}
+                    >
+                      {b.status}
+                    </span>
+                  </td>
+                  <td>{b.noOfGuests}</td>
+                  <td>{b.notes}</td>
+                  <td>
+                    {b.status === "ENQUIRED" && (
+                      <button onClick={() => confirmBooking(b.bookingId)}>
+                        Confirm
+                      </button>
+                    )}
+                    <button
+                      onClick={() => deleteBooking(b.bookingId)}
+                      style={{ background: "red", marginLeft: "10px" }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
