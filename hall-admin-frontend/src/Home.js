@@ -4,28 +4,46 @@ function Home() {
   const [date, setDate] = useState("");
   const [bookings, setBookings] = useState([]);
 
+  // 1. Updated Date Search Query Endpoint
   const fetchBookings = async () => {
-    const res = await fetch(
-      `http://localhost:8080/bookings?eventDate=${date}`
-    );
-    const data = await res.json();
-    setBookings(data);
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}/bookings?eventDate=${date}`
+      );
+      const data = await res.json();
+      setBookings(data);
+    } catch (error) {
+      console.error("Error searching bookings:", error);
+      alert("Failed to fetch bookings from server");
+    }
   };
 
+  // 2. Updated POST Confirmation Endpoint
   const confirmBooking = async (id) => {
-    const res = await fetch(`http://localhost:8080/bookings/${id}/confirm`, {
-      method: "POST",
-    });
-    alert(await res.text());
-    fetchBookings();
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/bookings/${id}/confirm`, {
+        method: "POST",
+      });
+      alert(await res.text());
+      fetchBookings();
+    } catch (error) {
+      console.error("Error confirming booking:", error);
+      alert("Failed to confirm booking");
+    }
   };
 
+  // 3. Updated DELETE Endpoint
   const deleteBooking = async (id) => {
-    const res = await fetch(`http://localhost:8080/bookings/${id}`, {
-      method: "DELETE",
-    });
-    alert(await res.text());
-    fetchBookings();
+    try {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/bookings/${id}`, {
+        method: "DELETE",
+      });
+      alert(await res.text());
+      fetchBookings();
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+      alert("Failed to delete booking");
+    }
   };
 
   return (

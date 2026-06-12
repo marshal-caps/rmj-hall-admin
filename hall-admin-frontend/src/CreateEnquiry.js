@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function CreateEnquiry() {
-
   const [form, setForm] = useState({
     customerName: "",
     phoneNumber: "",
@@ -21,10 +20,9 @@ function CreateEnquiry() {
   };
 
   const submitEnquiry = async () => {
-
     try {
-
-      const response = await fetch("http://localhost:8080/enquiry", {
+      // Replaced http://localhost:8080 with process.env.REACT_APP_API_URL
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/enquiry`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -35,8 +33,7 @@ function CreateEnquiry() {
       const data = await response.json();
 
       if (response.ok) {
-
-        alert(data.message);
+        alert(data.message || "Enquiry submitted successfully!");
 
         setForm({
           customerName: "",
@@ -48,25 +45,17 @@ function CreateEnquiry() {
           noOfGuests: "",
           notes: ""
         });
-
       } else {
-
-        alert(data.message);
-
+        alert(data.message || "Something went wrong.");
       }
-
     } catch (error) {
-
       console.error(error);
-
       alert("Unable to connect to server");
-
     }
   };
 
   return (
     <div className="form-card">
-
       <h2>Create Enquiry</h2>
 
       <input
@@ -91,7 +80,6 @@ function CreateEnquiry() {
       />
 
       <label>Event Date:</label>
-
       <input
         type="date"
         name="eventDate"
@@ -100,7 +88,6 @@ function CreateEnquiry() {
       />
 
       <label>Start Time:</label>
-
       <input
         type="time"
         name="startTime"
@@ -109,7 +96,6 @@ function CreateEnquiry() {
       />
 
       <label>End Time:</label>
-
       <input
         type="time"
         name="endTime"
@@ -138,7 +124,6 @@ function CreateEnquiry() {
       >
         Submit Enquiry
       </button>
-
     </div>
   );
 }

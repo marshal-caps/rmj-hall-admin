@@ -5,7 +5,7 @@ function BookingsList() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/bookings/all")
+    axios.get(`${process.env.REACT_APP_API_URL}/bookings/all`)
       .then(res => setBookings(res.data))
       .catch(err => console.error(err));
   }, []);

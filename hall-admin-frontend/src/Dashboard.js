@@ -6,17 +6,23 @@ function Dashboard() {
   const [recentEnquiries, setRecentEnquiries] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/dashboard/summary")
+    // 1. Updated summary endpoint
+    fetch(`${process.env.REACT_APP_API_URL}/dashboard/summary`)
       .then(res => res.json())
-      .then(data => setSummary(data));
+      .then(data => setSummary(data))
+      .catch(err => console.error("Error fetching summary:", err));
 
-    fetch("http://localhost:8080/dashboard/upcoming")
+    // 2. Updated upcoming bookings endpoint
+    fetch(`${process.env.REACT_APP_API_URL}/dashboard/upcoming`)
       .then(res => res.json())
-      .then(data => setUpcomingBookings(data));
+      .then(data => setUpcomingBookings(data))
+      .catch(err => console.error("Error fetching upcoming bookings:", err));
 
-    fetch("http://localhost:8080/dashboard/recent-enquiries")
+    // 3. Updated recent enquiries endpoint
+    fetch(`${process.env.REACT_APP_API_URL}/dashboard/recent-enquiries`)
       .then(res => res.json())
-      .then(data => setRecentEnquiries(data));
+      .then(data => setRecentEnquiries(data))
+      .catch(err => console.error("Error fetching recent enquiries:", err));
   }, []);
 
   if (!summary) {
