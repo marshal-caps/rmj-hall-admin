@@ -117,14 +117,17 @@ button:hover {
 
 /* Table Design */
 .table-wrapper {
+  display: block;
   width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin-top: 16px;
 }
 
 table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
   table-layout: auto;
   background: white;
@@ -139,14 +142,35 @@ th {
   padding: 12px;
   text-align: left;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 td {
   padding: 12px;
   border-bottom: 1px solid #eee;
   white-space: nowrap;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .table-wrapper {
+    margin-top: 12px;
+  }
+
+  th, td {
+    padding: 10px 8px;
+  }
+
+  .table-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .table-actions .action-button {
+    width: 100%;
+  }
 }
 
 tr:hover {
