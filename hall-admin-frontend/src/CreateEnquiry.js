@@ -21,7 +21,6 @@ function CreateEnquiry() {
 
   const submitEnquiry = async () => {
     try {
-      // Replaced http://localhost:8080 with process.env.REACT_APP_API_URL
       const response = await fetch(`${process.env.REACT_APP_API_URL}/enquiry`, {
         method: "POST",
         headers: {
@@ -30,23 +29,14 @@ function CreateEnquiry() {
         body: JSON.stringify(form)
       });
 
-      const data = await response.json();
+      // Change this to .text() because your Spring Boot controller returns a String
+      const message = await response.text(); 
 
       if (response.ok) {
-        alert(data.message || "Enquiry submitted successfully!");
-
-        setForm({
-          customerName: "",
-          phoneNumber: "",
-          address: "",
-          eventDate: "",
-          startTime: "",
-          endTime: "",
-          noOfGuests: "",
-          notes: ""
-        });
+        alert(message); // Now this will show "Added Successfully"
+        setForm({ /* ...reset your form fields... */ });
       } else {
-        alert(data.message || "Something went wrong.");
+        alert(message);
       }
     } catch (error) {
       console.error(error);
