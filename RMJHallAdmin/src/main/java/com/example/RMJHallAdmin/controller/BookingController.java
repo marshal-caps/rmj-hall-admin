@@ -3,14 +3,17 @@ package com.example.RMJHallAdmin.controller;
 import com.example.RMJHallAdmin.dto.DashBoardSummary;
 import com.example.RMJHallAdmin.dto.EnquiryRequest;
 import com.example.RMJHallAdmin.dto.UpdateEnquiryRequest;
+import com.example.RMJHallAdmin.exception.ErrorResponse;
 import com.example.RMJHallAdmin.model.BookingModel;
 import com.example.RMJHallAdmin.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.RMJHallAdmin.dto.UpcomingBookingDTO;
 import com.example.RMJHallAdmin.dto.RecentEnquiryDTO;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -20,9 +23,18 @@ public class BookingController {
     BookingService bookingService;
 
     @PostMapping("/enquiry")
-    public String createEnquiry(@RequestBody EnquiryRequest enquiry){
+    public ResponseEntity<ErrorResponse> createEnquiry(
+            @RequestBody EnquiryRequest enquiry) {
+
         bookingService.createsEnquiry(enquiry);
-        return "Added Successfully";
+
+        return ResponseEntity.ok(
+                new ErrorResponse(
+                        "Added Successfully",
+                        200,
+                        LocalDateTime.now()
+                )
+        );
     }
 
     @GetMapping("/bookings")
@@ -31,13 +43,14 @@ public class BookingController {
 
     }
     @PostMapping("/bookings/{bookingId}/confirm")
-    public String confirmBooking(@PathVariable("bookingId") int bookingId){
+    public ResponseEntity<ErrorResponse> confirmBooking(@PathVariable("bookingId") int bookingId){
         bookingService.confirm(bookingId);
-        return "Confirmed Successfully";
+        return ResponseEntity.ok(new ErrorResponse("Booking Confirmed Successfully",
+                200,LocalDateTime.now()));
 
     }
     @PutMapping("/bookings/{id}/update")
-    public String updateBooking(
+    public ResponseEntity<ErrorResponse> updateBooking(
             @PathVariable long id,
             @RequestBody UpdateEnquiryRequest request
     ) {
@@ -46,16 +59,19 @@ public class BookingController {
                 request.getStartTime(),
                 request.getEndTime(),
                 request.getNotes());
-        return "Updated Successfully";
+        return ResponseEntity.ok(new ErrorResponse("Updated Successfully",
+                200,LocalDateTime.now()));
     }
     @GetMapping("/bookings/all")
     public List<BookingModel> getBookings(){
         return bookingService.getBookings();
     }
+
     @DeleteMapping("/bookings/{id}")
-    public String delete(@PathVariable long id) {
+    public ResponseEntity<ErrorResponse> delete(@PathVariable long id) {
         bookingService.softDelete(id);
-        return "Deleted Successfully";
+        return ResponseEntity.ok(new ErrorResponse("Deleted Successfully",
+                200,LocalDateTime.now()));
     }
     @GetMapping("/dashboard/summary")
     public DashBoardSummary dashboard(){

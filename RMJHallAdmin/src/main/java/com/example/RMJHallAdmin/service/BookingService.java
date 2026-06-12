@@ -3,6 +3,7 @@ package com.example.RMJHallAdmin.service;
 import com.example.RMJHallAdmin.dto.DashBoardSummary;
 import com.example.RMJHallAdmin.dto.EnquiryRequest;
 import com.example.RMJHallAdmin.exception.BookingNotFoundException;
+import com.example.RMJHallAdmin.exception.InvalidPhoneNumberException;
 import com.example.RMJHallAdmin.exception.TimeSlotUnavailableException;
 import com.example.RMJHallAdmin.model.BookingModel;
 import com.example.RMJHallAdmin.model.BookingStatus;
@@ -27,7 +28,7 @@ public class BookingService {
 
     public void createsEnquiry(EnquiryRequest enquiry) {
         if (enquiry.getPhoneNumber() == null || enquiry.getPhoneNumber().length() < 10) {
-            throw new IllegalArgumentException("Enter Valid Phone number");
+            throw new InvalidPhoneNumberException();
         }
         if (enquiry.getEventDate().isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Event date cannot be in the past");
