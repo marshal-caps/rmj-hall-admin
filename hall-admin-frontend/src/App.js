@@ -5,7 +5,6 @@ import "./App.css";
 import Home from "./Home";
 import CreateEnquiry from "./CreateEnquiry";
 import Dashboard from "./Dashboard";
-//import Menus from "./Menus";
 import BookingsList from "./BookingsList";
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
           <Link to="/dashboard">Dashboard</Link>
           <Link to="/create">Create Enquiry</Link>
           <Link to="/">Search Bookings</Link>
-          {/* <Link to="/menus">Menus</Link> */}
           <Link to="/bookings">Confirmed Bookings</Link>
         </nav>
 
@@ -27,7 +25,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/create" element={<CreateEnquiry />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          {/* <Route path="/menus" element={<Menus />} /> */}
           <Route path="/bookings" element={<BookingsList />} />
         </Routes>
       </div>
