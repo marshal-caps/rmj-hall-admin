@@ -112,17 +112,19 @@ function Home() {
                   <td>{b.noOfGuests}</td>
                   <td>{b.notes}</td>
                   <td>
-                    {b.status === "ENQUIRED" && (
-                      <button onClick={() => confirmBooking(b.bookingId)}>
-                        Confirm
+                    <div className="table-actions">
+                      {b.status === "ENQUIRED" && (
+                        <button className="action-button" onClick={() => confirmBooking(b.bookingId)}>
+                          Confirm
+                        </button>
+                      )}
+                      <button
+                        className="action-button delete-button"
+                        onClick={() => deleteBooking(b.bookingId)}
+                      >
+                        Delete
                       </button>
-                    )}
-                    <button
-                      onClick={() => deleteBooking(b.bookingId)}
-                      style={{ background: "red", marginLeft: "10px" }}
-                    >
-                      Delete
-                    </button>
+                    </div>
                   </td>
                 </tr>
               ))}

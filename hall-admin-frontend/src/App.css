@@ -93,6 +93,28 @@ button:hover {
   background: #005fcc;
 }
 
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.table-actions .action-button {
+  padding: 8px 12px;
+  font-size: 0.95rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.table-actions .delete-button {
+  background: #dc3545;
+}
+
+.table-actions .delete-button:hover {
+  background: #b02a37;
+}
+
 /* Table Design */
 .table-wrapper {
   width: 100%;
@@ -103,8 +125,8 @@ button:hover {
 
 table {
   width: 100%;
-  min-width: 640px;
   border-collapse: collapse;
+  table-layout: auto;
   background: white;
   border-radius: 12px;
   overflow: hidden;
@@ -116,11 +138,14 @@ th {
   color: white;
   padding: 12px;
   text-align: left;
+  white-space: nowrap;
 }
 
 td {
   padding: 12px;
   border-bottom: 1px solid #eee;
+  white-space: nowrap;
+  overflow-wrap: break-word;
   word-break: break-word;
 }
 
