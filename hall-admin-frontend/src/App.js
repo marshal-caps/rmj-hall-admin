@@ -5,7 +5,7 @@ import "./App.css";
 import Home from "./Home";
 import CreateEnquiry from "./CreateEnquiry";
 import Dashboard from "./Dashboard";
-import Menus from "./Menus";
+//import Menus from "./Menus";
 import BookingsList from "./BookingsList";
 
 function App() {
