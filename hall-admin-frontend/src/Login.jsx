@@ -17,11 +17,11 @@ function Login() {
 
     try {
 
-        const response = await fetch("http://localhost:8080/login", {
-            method: "POST",
-            body: formData,
-            credentials: "include",
-        });
+        fetch("https://rmj-hall-admin-backend-production.up.railway.app/login", {
+    method: "POST",
+    body: formData,
+    credentials: "include"
+});
 
         console.log("Status:", response.status);
         console.log("Response:", response);
