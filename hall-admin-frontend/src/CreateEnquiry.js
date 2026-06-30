@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getApiUrl } from "./api";
 
 function CreateEnquiry() {
+
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     customerName: "",
     phoneNumber: "",
@@ -13,40 +17,77 @@ function CreateEnquiry() {
     notes: ""
   });
 
+  // Protect this page
+  useEffect(() => {
+
+    if (localStorage.getItem("loggedIn") !== "true") {
+      navigate("/");
+    }
+
+  }, [navigate]);
+
   const updateField = (e) => {
+
     setForm({
       ...form,
       [e.target.name]: e.target.value
     });
+
   };
 
   const submitEnquiry = async () => {
+
     try {
+
       const response = await fetch(getApiUrl("/enquiry"), {
+
         method: "POST",
+
         headers: {
           "Content-Type": "application/json"
         },
+
         body: JSON.stringify(form)
+
       });
 
-      // Change this to .text() because your Spring Boot controller returns a String
-      const message = await response.text(); 
+      const message = await response.text();
 
       if (response.ok) {
-        alert(message); // Now this will show "Added Successfully"
-        setForm({ /* ...reset your form fields... */ });
-      } else {
+
         alert(message);
+
+        setForm({
+          customerName: "",
+          phoneNumber: "",
+          address: "",
+          eventDate: "",
+          startTime: "",
+          endTime: "",
+          noOfGuests: "",
+          notes: ""
+        });
+
+      } else {
+
+        alert(message);
+
       }
+
     } catch (error) {
+
       console.error(error);
+
       alert("Unable to connect to server");
+
     }
+
   };
 
   return (
+
     <div className="form-card">
+
       <h2>Create Enquiry</h2>
 
       <input
@@ -71,6 +112,7 @@ function CreateEnquiry() {
       />
 
       <label>Event Date:</label>
+
       <input
         type="date"
         name="eventDate"
@@ -79,6 +121,7 @@ function CreateEnquiry() {
       />
 
       <label>Start Time:</label>
+
       <input
         type="time"
         name="startTime"
@@ -87,6 +130,7 @@ function CreateEnquiry() {
       />
 
       <label>End Time:</label>
+
       <input
         type="time"
         name="endTime"
@@ -115,8 +159,11 @@ function CreateEnquiry() {
       >
         Submit Enquiry
       </button>
+
     </div>
+
   );
+
 }
 
 export default CreateEnquiry;
