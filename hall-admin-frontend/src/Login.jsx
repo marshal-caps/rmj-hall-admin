@@ -1,36 +1,64 @@
 import { useState } from "react";
-import { getApiUrl } from "./api";
+import { useNavigate } from "react-router-dom";
+
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://rmj-hall-admin-backend-production.up.railway.app";
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
 
-  const handleLogin = async () => {
-    const formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
+    const navigate = useNavigate();
 
-    try {
-      const response = await fetch(getApiUrl("/login"), {
-        method: "POST",
-        body: formData,
-        credentials: "include"
-      });
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-      const text = await response.text();
-      if (!response.ok) {
-        throw new Error(text || "Login failed");
-      }
+    const handleLogin = async () => {
 
-      setMessage("Login successful");
-    } catch (error) {
-      console.error(error);
-      setMessage(error.message || "Unable to connect to the server");
-    }
-  };
+        try {
 
-  return (
+            const response = await fetch(`${API_URL}/api/auth/login`, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    username,
+                    password
+                })
+
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+
+                localStorage.setItem("loggedIn", "true");
+
+                alert(data.message);
+
+                navigate("/dashboard");
+
+            } else {
+
+                alert(data.message);
+
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Unable to connect to server.");
+
+        }
+
+    };
+
+    return (
 
         <div className="login-container">
 
@@ -57,8 +85,6 @@ function Login() {
             <button onClick={handleLogin}>
                 Login
             </button>
-
-            {message && <p style={{ marginTop: "12px" }}>{message}</p>}
 
         </div>
 
