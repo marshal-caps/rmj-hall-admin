@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { getApiUrl } from "./api";
 
 function BookingsList() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_URL}/bookings/all`)
+    axios.get(getApiUrl("/bookings/all"))
       .then(res => setBookings(res.data))
       .catch(err => console.error(err));
   }, []);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getApiUrl } from "./api";
 
 function Dashboard() {
   const [summary, setSummary] = useState(null);
@@ -7,19 +8,19 @@ function Dashboard() {
 
   useEffect(() => {
     // 1. Updated summary endpoint
-    fetch(`${process.env.REACT_APP_API_URL}/dashboard/summary`)
+    fetch(getApiUrl("/dashboard/summary"))
       .then(res => res.json())
       .then(data => setSummary(data))
       .catch(err => console.error("Error fetching summary:", err));
 
     // 2. Updated upcoming bookings endpoint
-    fetch(`${process.env.REACT_APP_API_URL}/dashboard/upcoming`)
+    fetch(getApiUrl("/dashboard/upcoming"))
       .then(res => res.json())
       .then(data => setUpcomingBookings(data))
       .catch(err => console.error("Error fetching upcoming bookings:", err));
 
     // 3. Updated recent enquiries endpoint
-    fetch(`${process.env.REACT_APP_API_URL}/dashboard/recent-enquiries`)
+    fetch(getApiUrl("/dashboard/recent-enquiries"))
       .then(res => res.json())
       .then(data => setRecentEnquiries(data))
       .catch(err => console.error("Error fetching recent enquiries:", err));

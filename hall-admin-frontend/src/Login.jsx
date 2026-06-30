@@ -1,35 +1,36 @@
 import { useState } from "react";
+import { getApiUrl } from "./api";
 
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-    const handleLogin = async () => {
-
+  const handleLogin = async () => {
     const formData = new FormData();
-
     formData.append("username", username);
     formData.append("password", password);
 
-    console.log("Username:", username);
-    console.log("Password:", password);
-
     try {
+      const response = await fetch(getApiUrl("/login"), {
+        method: "POST",
+        body: formData,
+        credentials: "include"
+      });
 
-        fetch("https://rmj-hall-admin-backend-production.up.railway.app/login", {
-    method: "POST",
-    body: formData,
-    credentials: "include"
-});
+      const text = await response.text();
+      if (!response.ok) {
+        throw new Error(text || "Login failed");
+      }
 
-
+      setMessage("Login successful");
     } catch (error) {
-        console.error(error);
+      console.error(error);
+      setMessage(error.message || "Unable to connect to the server");
     }
-};
+  };
 
-    return (
+  return (
 
         <div className="login-container">
 
@@ -56,6 +57,8 @@ function Login() {
             <button onClick={handleLogin}>
                 Login
             </button>
+
+            {message && <p style={{ marginTop: "12px" }}>{message}</p>}
 
         </div>
 

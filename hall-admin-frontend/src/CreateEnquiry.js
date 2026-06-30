@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getApiUrl } from "./api";
 
 function CreateEnquiry() {
   const [form, setForm] = useState({
@@ -21,7 +22,7 @@ function CreateEnquiry() {
 
   const submitEnquiry = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/enquiry`, {
+      const response = await fetch(getApiUrl("/enquiry"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

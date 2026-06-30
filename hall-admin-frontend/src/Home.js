@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { getApiUrl } from "./api";
 
 function Home() {
   const [date, setDate] = useState("");
@@ -8,7 +9,7 @@ function Home() {
   const fetchBookings = async () => {
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/bookings?eventDate=${date}`
+        getApiUrl(`/bookings?eventDate=${date}`)
       );
       const data = await res.json();
       setBookings(data);
@@ -21,7 +22,7 @@ function Home() {
   // 2. Updated POST Confirmation Endpoint
   const confirmBooking = async (id) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/bookings/${id}/confirm`, {
+      const res = await fetch(getApiUrl(`/bookings/${id}/confirm`), {
         method: "POST",
       });
       alert(await res.text());
@@ -35,7 +36,7 @@ function Home() {
   // 3. Updated DELETE Endpoint
   const deleteBooking = async (id) => {
     try {
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/bookings/${id}`, {
+      const res = await fetch(getApiUrl(`/bookings/${id}`), {
         method: "DELETE",
       });
       alert(await res.text());
