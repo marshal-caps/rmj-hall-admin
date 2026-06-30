@@ -2,8 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import Login from "./Login";
-
-import Home from "./Home";
 import CreateEnquiry from "./CreateEnquiry";
 import Dashboard from "./Dashboard";
 import BookingsList from "./BookingsList";
