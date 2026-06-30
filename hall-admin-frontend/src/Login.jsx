@@ -23,8 +23,6 @@ function Login() {
     credentials: "include"
 });
 
-        console.log("Status:", response.status);
-        console.log("Response:", response);
 
     } catch (error) {
         console.error(error);
