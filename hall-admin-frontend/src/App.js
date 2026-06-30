@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
+import Login from "./Login";
 
 import Home from "./Home";
 import CreateEnquiry from "./CreateEnquiry";
@@ -22,11 +23,14 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/create" element={<CreateEnquiry />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/bookings" element={<BookingsList />} />
-        </Routes>
+    <Route path="/" element={<Login />} />
+
+    <Route path="/dashboard" element={<Dashboard />} />
+
+    <Route path="/bookings" element={<BookingsList />} />
+
+    <Route path="/create" element={<CreateEnquiry />} />
+</Routes>
       </div>
     </Router>
   );
