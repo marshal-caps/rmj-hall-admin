@@ -21,6 +21,7 @@ function BookingsList() {
             <tr>
               <th>ID</th>
               <th>Customer</th>
+              <th>Event Name</th>
               <th>Phone</th>
               <th>Event Date</th>
               <th>Start</th>
@@ -35,6 +36,7 @@ function BookingsList() {
             <tr key={b.bookingId}>
               <td>{b.bookingId}</td>
               <td>{b.customerName}</td>
+              <td>{b.eventName}</td>
               <td>{b.phoneNumber}</td>
               <td>{b.eventDate}</td>
               <td>{b.startTime}</td>

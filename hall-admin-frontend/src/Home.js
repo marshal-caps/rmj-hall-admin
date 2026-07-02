@@ -162,6 +162,7 @@ function Home() {
 
               <tr>
                 <th>Name</th>
+                <th>Event Name</th>
                 <th>Phone</th>
                 <th>Date</th>
                 <th>Time</th>
@@ -180,6 +181,7 @@ function Home() {
                 <tr key={b.bookingId}>
 
                   <td>{b.customerName}</td>
+                  <td>{b.eventName}</td>
 
                   <td>{b.phoneNumber}</td>
 

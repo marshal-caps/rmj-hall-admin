@@ -10,6 +10,7 @@ function CreateEnquiry() {
     customerName: "",
     phoneNumber: "",
     address: "",
+    eventName:"",
     eventDate: "",
     startTime: "",
     endTime: "",
@@ -61,6 +62,7 @@ function CreateEnquiry() {
           customerName: "",
           phoneNumber: "",
           address: "",
+          eventName:"",
           eventDate: "",
           startTime: "",
           endTime: "",
@@ -110,6 +112,14 @@ function CreateEnquiry() {
         value={form.address}
         onChange={updateField}
       />
+      <input
+         name="eventName"
+         placeholder="Event Name"
+         value={form.eventName}
+         onChange={updateField}
+      />
+
+      
 
       <label>Event Date:</label>
 

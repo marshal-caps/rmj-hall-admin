@@ -105,6 +105,8 @@ function Dashboard() {
           <thead>
             <tr>
               <th>Customer</th>
+              <th>Event Name</th>
+              <th>Phone</th>
               <th>Date</th>
               <th>Start</th>
               <th>End</th>
@@ -118,6 +120,8 @@ function Dashboard() {
 
               <tr key={index}>
                 <td>{booking.customerName}</td>
+                <td>{booking.eventName}</td>
+                <td>{booking.phoneNumber}</td>
                 <td>{booking.eventDate}</td>
                 <td>{booking.startTime}</td>
                 <td>{booking.endTime}</td>
@@ -143,6 +147,7 @@ function Dashboard() {
           <thead>
             <tr>
               <th>Customer</th>
+              <th>Event Name</th>
               <th>Phone</th>
               <th>Date</th>
               <th>Created At</th>
@@ -156,6 +161,7 @@ function Dashboard() {
 
               <tr key={index}>
                 <td>{enquiry.customerName}</td>
+                <td>{enquiry.eventName}</td>
                 <td>{enquiry.phoneNumber}</td>
                 <td>{enquiry.eventDate}</td>
                 <td>{enquiry.createdAt}</td>
